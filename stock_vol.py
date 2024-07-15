@@ -2,7 +2,7 @@ import yfinance as yf
 import numpy as np
 
 # Step 1: Collect Historical Price Data
-ticker = 'HDFCBANK.NS'
+ticker = 'ABCAPITAL.NS'
 data = yf.download(ticker, start='2023-01-01', end='2023-12-31')
 prices = data['Close']
 
