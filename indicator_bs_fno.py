@@ -157,11 +157,14 @@ def calculate_and_collect_option_prices(dataframe, option_type, T):
         sigma = row['Volatility']
         isCallOption = (option_type == "CALL")
         K = initial_strike_price(S0)
+        Date = row.name
 
         for i in range(21):
             result = BlackScholesPricingModel(S0, K, r, sigma, T, isCallOption)
             result['Strike Price'] = K
             result['Symbol'] = row['symbol']
+            result['Close'] = row['Close']
+            result['Date'] = Date 
             results.append(result)
             if S0 < 500:
                 K += 2.5
