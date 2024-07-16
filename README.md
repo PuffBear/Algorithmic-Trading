@@ -1,5 +1,5 @@
 # Creating the README.md file content
-readme_content = """
+
 # Algorithmic Trading Module
 
 This project is a comprehensive suite of tools for algorithmic trading, covering a wide range of functions from stock analysis to options pricing. It includes scripts for different markets (NSE and NYSE) and various types of analysis (e.g., volatility calculation, Monte Carlo simulations, single stock analysis, and more). The organization into directories and specific scripts allows for focused analysis and strategy development for different segments of the market.
