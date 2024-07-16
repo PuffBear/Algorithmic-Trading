@@ -77,8 +77,6 @@ r = 0.069
 sigma = 0.2961
 isCallOption = True
 
-count = 0
-
 for i in range(21):
     if(S0<500):
         print("(Option Price, Time, DELTA, GAMMA, THETA, VEGA, RHO, IMPLIED VOLATILITY, INTRINSIC VALUE), Strike Price")
