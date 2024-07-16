@@ -147,9 +147,8 @@ datas = dfs.drop(['Open', 'High', 'Low', 'Adj Close', 'Volume', 'upper_band', 'l
 buy_dataframe = datas[datas['buy_signal'] == True]
 sell_dataframe = datas[datas['sell_signal'] == True]
 
-def calculate_and_collect_option_prices(dataframe, option_type):
+def calculate_and_collect_option_prices(dataframe, option_type, T):
     results = []
-    T = float(input(f"Enter Time in decimals in terms of years analysis: "))
     for _, row in dataframe.iterrows():
         S0 = row['Close']
         r = 0.069
@@ -174,14 +173,16 @@ def calculate_and_collect_option_prices(dataframe, option_type):
                 K += 50
     return results
 
+time = float(input(f"Enter Time in decimals in terms of years analysis: "))
+
 # BUY SIGNAL
 print("BUY SIGNAL OPTIONS: ")
-buy_option_prices = calculate_and_collect_option_prices(buy_dataframe, "CALL")
+buy_option_prices = calculate_and_collect_option_prices(buy_dataframe, "CALL", time)
 buy_df = pd.DataFrame(buy_option_prices)
 print(buy_df)
 
 # SELL SIGNAL
 print("SELL SIGNAL OPTIONS: ")
-sell_option_prices = calculate_and_collect_option_prices(sell_dataframe, "PUT")
+sell_option_prices = calculate_and_collect_option_prices(sell_dataframe, "PUT", time)
 sell_df = pd.DataFrame(sell_option_prices)
 print(sell_df)
