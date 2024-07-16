@@ -2,6 +2,7 @@ import yfinance as yf
 import pandas as pd
 import numpy as np
 import math
+import matplotlib.pyplot as plt
 
 # Function to calculate historical volatility
 def calculate_volatility(ticker, start_date, end_date):
@@ -149,7 +150,7 @@ sell_dataframe = datas[datas['sell_signal'] == True]
 
 def calculate_and_collect_option_prices(dataframe, option_type):
     results = []
-    T = float(input(f"Enter Time in decimals in terms of years analysis: "))
+    T = float(input(f"Enter Time in decimals in terms of years for analysis: "))
     for _, row in dataframe.iterrows():
         S0 = row['Close']
         r = 0.069
@@ -159,8 +160,8 @@ def calculate_and_collect_option_prices(dataframe, option_type):
 
         for i in range(21):
             result = BlackScholesPricingModel(S0, K, r, sigma, T, isCallOption)
-            result["Strike Price"] = K
-            result["Symbol"] = row['symbol']
+            result['Strike Price'] = K
+            result['Symbol'] = row['symbol']
             results.append(result)
             if S0 < 500:
                 K += 2.5
@@ -174,14 +175,25 @@ def calculate_and_collect_option_prices(dataframe, option_type):
                 K += 50
     return results
 
-# BUY SIGNAL
-print("BUY SIGNAL OPTIONS: ")
 buy_option_prices = calculate_and_collect_option_prices(buy_dataframe, "CALL")
 buy_df = pd.DataFrame(buy_option_prices)
-print(buy_df)
 
-# SELL SIGNAL
-print("SELL SIGNAL OPTIONS: ")
 sell_option_prices = calculate_and_collect_option_prices(sell_dataframe, "PUT")
 sell_df = pd.DataFrame(sell_option_prices)
-print(sell_df)
+
+# Function to create charts for each stock
+def create_premium_vs_strike_chart(df, option_type):
+    unique_symbols = df['Symbol'].unique()
+    for symbol in unique_symbols:
+        symbol_df = df[df['Symbol'] == symbol]
+        plt.figure(figsize=(10, 6))
+        plt.plot(symbol_df['Strike Price'].to_numpy(), symbol_df['Premium'].to_numpy(), marker='o')
+        plt.title(f'{symbol} - {option_type} Option: Premium vs Strike Price')
+        plt.xlabel('Strike Price')
+        plt.ylabel('Premium')
+        plt.grid(True)
+        plt.show()
+
+# Create charts for buy and sell signal options
+create_premium_vs_strike_chart(buy_df, "CALL")
+create_premium_vs_strike_chart(sell_df, "PUT")

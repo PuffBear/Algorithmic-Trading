@@ -2,6 +2,8 @@ import yfinance as yf
 import pandas as pd
 import numpy as np
 import math
+import tkinter as tk
+from tkinter import ttk
 
 # Function to calculate historical volatility
 def calculate_volatility(ticker, start_date, end_date):
@@ -99,9 +101,9 @@ def initial_strike_price(S0):
     return K
 
 # Main code to get data and calculate signals
-tickers = ['ABCAPITAL.NS', 'ESCORTS.NS', 'TATASTEEL.NS', 'TATACHEM.NS', 'BANKBARODA.NS', 'TCS.NS']
+tickers = [ 'EQUITASBNK.NS', 'AARTIIND.NS', 'ABB.NS', 'ABBOTINDIA.NS', 'ABCAPITAL.NS', 'ABFRL.NS', 'ACC.NS', 'ADANIENT.NS', 'ADANIPORTS.NS', 'AMBUJACEM.NS', 'APOLLOHOSP.NS', 'APOLLOTYRE.NS', 'ASHOKLEY.NS', 'ASIANPAINT.NS', 'ASTRAL.NS', 'ATUL.NS', 'AUBANK.NS', 'AUROPHARMA.NS', 'AXISBANK.NS', 'BAJAJ-AUTO.NS', 'BAJAJFINSV.NS', 'BAJFINANCE.NS', 'BALKRISIND.NS', 'BALRAMCHIN.NS', 'BANDHANBNK.NS', 'BANKBARODA.NS', 'BATAINDIA.NS', 'BEL.NS', 'BERGEPAINT.NS', 'BHARATFORG.NS', 'BHARTIARTL.NS', 'BHEL.NS', 'BIOCON.NS', 'BOSCHLTD.NS', 'BPCL.NS', 'BRITANNIA.NS', 'BSOFT.NS', 'CANBK.NS', 'CANFINHOME.NS', 'CHAMBLFERT.NS', 'CHOLAFIN.NS', 'CIPLA.NS', 'COALINDIA.NS', 'COFORGE.NS', 'COLPAL.NS', 'CONCOR.NS', 'COROMANDEL.NS', 'CROMPTON.NS', 'CUMMINSIND.NS', 'DABUR.NS', 'DALBHARAT.NS', 'DEEPAKNTR.NS', 'DELTACORP.NS', 'DIVISLAB.NS', 'DIXON.NS', 'DLF.NS', 'DRREDDY.NS', 'EICHERMOT.NS', 'ESCORTS.NS', 'EXIDEIND.NS', 'FEDERALBNK.NS', 'GAIL.NS', 'GLENMARK.NS', 'GMRINFRA.NS', 'GNFC.NS', 'GODREJCP.NS', 'GODREJPROP.NS', 'GRANULES.NS', 'GRASIM.NS', 'GUJGASLTD.NS', 'HAL.NS', 'HAVELLS.NS', 'HCLTECH.NS', 'HDFC.NS', 'HDFCAMC.NS', 'HDFCBANK.NS', 'HDFCLIFE.NS', 'HEROMOTOCO.NS', 'HINDALCO.NS', 'HINDCOPPER.NS', 'HINDPETRO.NS', 'HINDUNILVR.NS', 'ICICIBANK.NS', 'ICICIPRULI.NS', 'IDEA.NS', 'IDFC.NS', 'IDFCFIRSTB.NS', 'IEX.NS', 'IGL.NS', 'INDHOTEL.NS', 'INDIACEM.NS', 'INDIAMART.NS', 'INDIGO.NS', 'INDUSINDBK.NS', 'INDUSTOWER.NS', 'INFY.NS', 'INTELLECT.NS', 'IOC.NS', 'IPCALAB.NS', 'IRCTC.NS', 'ITC.NS', 'JINDALSTEL.NS', 'JKCEMENT.NS', 'JSWSTEEL.NS', 'JUBLFOOD.NS', 'KOTAKBANK.NS', 'L&TFH.NS', 'LALPATHLAB.NS', 'LAURUSLABS.NS', 'LICHSGFIN.NS', 'LT.NS', 'LTIM.NS', 'LTTS.NS', 'LUPIN.NS', 'M&M.NS', 'M&MFIN.NS', 'MANAPPURAM.NS', 'MARICO.NS', 'MARUTI.NS', 'MCDOWELL-N.NS', 'MCX.NS', 'METROPOLIS.NS', 'MFSL.NS', 'MGL.NS', 'MOTHERSON.NS', 'MPHASIS.NS', 'MRF.NS', 'MUTHOOTFIN.NS', 'NATIONALUM.NS', 'NAUKRI.NS', 'NAVINFLUOR.NS', 'NESTLEIND.NS', 'NMDC.NS', 'NTPC.NS', 'OBEROIRLTY.NS', 'ONGC.NS', 'PAGEIND.NS', 'PEL.NS', 'PERSISTENT.NS', 'PFC.NS', 'PIDILITIND.NS', 'PIIND.NS', 'PNB.NS', 'POLYCAB.NS', 'POWERGRID.NS', 'PVRINOX.NS', 'RAIN.NS', 'RAMCOCEM.NS', 'RBLBANK.NS', 'RECLTD.NS', 'RELIANCE.NS', 'SAIL.NS', 'SBICARD.NS', 'SBILIFE.NS', 'SBIN.NS', 'SHREECEM.NS', 'SHRIRAMFIN.NS', 'SIEMENS.NS', 'SRF.NS', 'SUNPHARMA.NS', 'SUNTV.NS', 'SYNGENE.NS', 'TATACHEM.NS', 'TATACOMM.NS', 'TATACONSUM.NS', 'TATAMOTORS.NS', 'TATAPOWER.NS', 'TATASTEEL.NS', 'TCS.NS', 'TECHM.NS', 'TITAN.NS', 'TORNTPHARM.NS', 'TRENT.NS', 'TVSMOTOR.NS', 'UBL.NS', 'ULTRACEMCO.NS', 'UPL.NS', 'VEDL.NS', 'VOLTAS.NS', 'WIPRO.NS', 'ZEEL.NS', 'ZYDUSLIFE.NS']
 start_date = "2011-11-01"
-end_dates = ["2024-07-04", "2024-07-05", "2024-07-06", "2024-07-11", "2024-07-12", "2024-07-15"]
+end_dates = ["2024-07-01","2024-07-02","2024-07-03","2024-07-04","2024-07-05","2024-07-06","2024-07-11","2024-07-12","2024-07-15"]
 
 overall_data = []
 
@@ -158,8 +160,8 @@ def calculate_and_collect_option_prices(dataframe, option_type, T):
 
         for i in range(21):
             result = BlackScholesPricingModel(S0, K, r, sigma, T, isCallOption)
-            result["Strike Price"] = K
-            result["Symbol"] = row['symbol']
+            result['Strike Price'] = K
+            result['Symbol'] = row['symbol']
             results.append(result)
             if S0 < 500:
                 K += 2.5
@@ -175,14 +177,39 @@ def calculate_and_collect_option_prices(dataframe, option_type, T):
 
 time = float(input(f"Enter Time in decimals in terms of years analysis: "))
 
-# BUY SIGNAL
-print("BUY SIGNAL OPTIONS: ")
 buy_option_prices = calculate_and_collect_option_prices(buy_dataframe, "CALL", time)
 buy_df = pd.DataFrame(buy_option_prices)
-print(buy_df)
 
-# SELL SIGNAL
-print("SELL SIGNAL OPTIONS: ")
 sell_option_prices = calculate_and_collect_option_prices(sell_dataframe, "PUT", time)
 sell_df = pd.DataFrame(sell_option_prices)
-print(sell_df)
+
+# Create a GUI to display the DataFrame
+def display_dataframe(df, title):
+    root = tk.Tk()
+    root.title(title)
+    
+    frame = ttk.Frame(root)
+    frame.pack(fill='both', expand=True)
+
+    table = ttk.Treeview(frame, columns=list(df.columns), show='headings')
+    table.pack(side='left', fill='both', expand=True)
+
+    # Add column headings
+    for col in df.columns:
+        table.heading(col, text=col)
+        table.column(col, width=100, anchor='center')
+
+    # Add data to the table
+    for index, row in df.iterrows():
+        table.insert('', 'end', values=list(row))
+
+    # Add a scrollbar
+    scrollbar = ttk.Scrollbar(frame, orient='vertical', command=table.yview)
+    table.configure(yscroll=scrollbar.set)
+    scrollbar.pack(side='right', fill='y')
+
+    root.mainloop()
+
+# Display the DataFrames in GUI
+display_dataframe(buy_df, "Buy Signal Options")
+display_dataframe(sell_df, "Sell Signal Options")
