@@ -15,9 +15,7 @@ This directory contains scripts related to trading stocks listed on the National
 ### nyse
 This directory focuses on trading stocks listed on the New York Stock Exchange (NYSE).
 
-## Scripts
-
-### NSE Directory Scripts
+## NSE Scripts
 
 1. **fno_stocks.py**
    - This script is focused on trading Futures and Options (F&O) stocks. It contains strategies and analysis specific to F&O trading.
@@ -34,7 +32,7 @@ This directory focuses on trading stocks listed on the New York Stock Exchange (
 5. **onestock_analysis.py**
    - This script performs detailed analysis on a single stock, involving various technical indicators and fundamental analysis.
 
-### NYSE Directory Scripts
+### Other Scripts
 
 1. **black_scholes_pricing.py**
    - This script implements the Black-Scholes model, a mathematical model for pricing options. It calculates the theoretical price of options listed on the NYSE.
