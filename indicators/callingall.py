@@ -105,6 +105,20 @@ for end_date in end_dates:
         data['CCI'] = calculate_CCI(data, period=20)
         data['EMA'] = calculate_EMA(data, period=20)
         data['SMA'] = calculate_SMA(data, period=20)
+
+        data['Buy_Signal'] = np.where(
+            (data['rsi'] < 30) &
+            (data['Close'] <= data['lower_band']) &
+            (data['CCI'] < -100) &
+            (data['EMA'] > data['SMA']),
+            True, False)
+
+        data['Sell_Signal'] = np.where(
+            (data['rsi'] > 70) &
+            (data['Close'] >= data['upper_band']) &
+            (data['CCI'] > 100) &
+            (data['EMA'] < data['SMA']),
+            True, False)
         
         data = data.dropna()
         last_row = data.tail(1)
@@ -115,7 +129,7 @@ for end_date in end_dates:
 
     datas = []
     datas = dfs
-    datas = datas.dropna()
+    datas = datas.drop(['Open', 'High', 'Low', 'Adj Close', 'Volume', 'upper_band', 'lower_band', 'rsi', 'CCI', 'EMA','SMA',], axis = 1)
 
 print(datas.head)
 
